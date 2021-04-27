@@ -69,6 +69,10 @@ function searchApi(query) {
 
       return response.json();
     })
+
+var x = "helllo"
+    //HELLO FROM AYAD BRANCH
+
     // .then(function (locRes) {
     //   // write query to page so user knows what they are viewing
     //   resultTextEl.textContent = locRes.search.query;
