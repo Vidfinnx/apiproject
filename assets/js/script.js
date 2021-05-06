@@ -7,6 +7,7 @@ var cards = document.querySelector("#app")
 var markEl = document.querySelector('#mark')
 var model = document.querySelector('#modal')
 var mapSection = document.querySelector('#mapsection')
+var country = document.querySelector('.country')
 
 
 
@@ -36,15 +37,41 @@ function getParams() {
 
   // searchApi(query );
 }
+function searchstadiumapi(query) {
+  var studiamInfo = "https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t="
+
+  studiamInfo = studiamInfo + query;
+
+
+fetch(studiamInfo)
+.then(function (response) {
+  if (!response.ok) {
+    throw response.json();
+  }
+  return response.json();
+})
+
+.then(function (locRes1) {
+  // write locRes to page so user knows what they are viewing
+  cards.textContent = locRes1.teams.length;
+  console.log(locRes1.teams);
+  if (!locRes1.teams.length) {
+    console.log('No results found!');
+    cards.innerHTML = '<h3>No results found, search again!</h3>';
+  } else {
+    cards.textContent = '';
+    for (var i = 0; i < locRes1.teams.length; i++) {
+      printResults1(locRes1.teams[i]);
+    }
+  }
+})
+}
+
 
 function searchApi(query) {
   var event_url = "https://www.thesportsdb.com/api/v1/json/1/searchevents.php?e=";
 
   var event_url = event_url + query ;
-
-  // var team_url = "https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=";
-
-  // var team_url = team_url + query;
 
 console.log(event_url);
 
@@ -65,7 +92,7 @@ console.log(event_url);
         cards.innerHTML = '<h3>No results found, search again!</h3>';
       } else {
         cards.textContent = '';
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < locRes.event.length; i++) {
           printResults(locRes.event[i]);
         }
       }
@@ -79,9 +106,16 @@ console.log(event_url);
 
 
 }
+
+function printResults1(countryObj) {
+  console.log(countryObj.intStadiumCapacity);
+  var capacity = document.querySelector("#capacity")
+  capacity.textContent = countryObj.intStadiumCapacity
+  
+}
+
+
 function printResults(resultObj) {
-
-
   var resultCard = document.createElement('div');
   resultCard.classList.add("column", "is-4" );
 
@@ -97,10 +131,17 @@ function printResults(resultObj) {
   firstFigure.classList.add("image", "is-16b=y9");
   imageCard.append(firstFigure)
 
-
   var gameThumb = document.createElement('img')
-  gameThumb.setAttribute("src", resultObj.strThumb)
-  firstFigure.append(gameThumb)
+
+  if (resultObj.strThumb) {
+    gameThumb.setAttribute("src", resultObj.strThumb)
+    firstFigure.append(gameThumb)
+  }else {
+    gameThumb.setAttribute("src", "./assets/img/no-img-found.png")
+    gameThumb.setAttribute("style", "height: 23vh;")
+    
+    firstFigure.append(gameThumb)
+  }
 
   var contentCard = document.createElement('div')
   contentCard.classList.add("card-content")
@@ -133,20 +174,34 @@ function printResults(resultObj) {
 
 
 
+
   var footerItem = document.createElement("p")
   footerItem.classList.add("card-footer-item")
   footerItem.innerHTML = '<a href="#map" style="color: red;" class="title is-size-6">' + resultObj.strVenue + '</a>'
   mediaContent.append(footerItem)
 
+
+  
+
   //  Map Function
   function mapSearch(location) {
       console.log("THIS IS HERE " + location);
       geocoder.query(JSON.stringify(location), showMap);
+    }       
+    function hiddenMapSection() {
+      var mapShow = document.getElementById("mapsection");
+      mapShow.classList.remove('hidden') 
 
-    }                            
-  
-  footerItem.addEventListener('mouseover',() => { mapSearch(resultObj.strVenue)})
-}
+      var countryName = document.querySelector("#country")
+      countryName.innerHTML = resultObj.strCountry
+    }
+    footerItem.addEventListener('click', () => {
+       mapSearch(resultObj.strVenue)
+       hiddenMapSection()
+      
+      })
+  }
+
 
 
 
@@ -163,6 +218,7 @@ function handleSearchFormSubmit(event) {
   }
 
   searchApi(searchInputVal);
+  searchstadiumapi(searchInputVal);
 }
 
 // Animation
