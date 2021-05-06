@@ -3,23 +3,17 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="/assets/img/pagescreencapture.png" alt="Logo" width="80" height="80">
+  <a href="https://ayadalshaikhli.github.io/apiproject/">
+    <img src="/assets/img/pagescreencapture.png" alt="screenshot" >
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Ball Finder</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    An awesome Website to search up coming events
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://ayadalshaikhli.github.io/apiproject/"><strong>Explore the Website »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
   </p>
 </p>
 
