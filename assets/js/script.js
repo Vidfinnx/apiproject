@@ -55,6 +55,7 @@ console.log(event_url, team_url);
       }
       return response.json();
     })
+
     .then(function (locRes) {
       // write locRes to page so user knows what they are viewing
       cards.textContent = locRes.event.length;
@@ -70,9 +71,12 @@ console.log(event_url, team_url);
       }
       
     })
+
+
     .catch(function (error) {
       console.error(error);
     });
+
 
 }
 
@@ -144,6 +148,79 @@ function printResults(resultObj) {
   
   footerItem.addEventListener('mouseover',() => { mapSearch(resultObj.strVenue)})
 }
+
+
+
+
+function printResults(resultObj) {
+
+
+  var resultCard = document.createElement('div');
+  resultCard.classList.add("column", "is-4" );
+
+  var largeCard = document.createElement('div');
+  largeCard.classList.add("card", "large");
+  resultCard.append(largeCard)
+ 
+  var imageCard = document.createElement('div')
+  imageCard.classList.add("card-image");
+  largeCard.append(imageCard)
+
+  var firstFigure = document.createElement('figure')
+  firstFigure.classList.add("image", "is-16b=y9");
+  imageCard.append(firstFigure)
+
+
+  var gameThumb = document.createElement('img')
+  gameThumb.setAttribute("src", resultObj.strThumb)
+  firstFigure.append(gameThumb)
+
+  var contentCard = document.createElement('div')
+  contentCard.classList.add("card-content")
+  largeCard.append(contentCard)
+
+  var mediaCard = document.createElement('div')
+  mediaCard.classList.add("media")
+  contentCard.append(mediaCard)
+
+  var mediaContent = document.createElement('div')
+  mediaContent.classList.add("media-content")
+  mediaCard.append(mediaContent)
+
+  var matchName = document.createElement('p')
+  matchName.classList.add("title", "is-6", "no-padding")
+  matchName.innerHTML = resultObj.strEvent
+  mediaContent.append(matchName)
+
+  var sportName = document.createElement('p')
+  sportName.classList.add("title", "is-7", "no-padding")
+  sportName.innerHTML = "Sport: " + resultObj.strSport
+  mediaContent.append(sportName)
+
+  var dateTime = document.createElement('p')
+  dateTime.classList.add("title", "is-7", "no-padding")
+  dateTime.innerHTML = "Date: " + resultObj.dateEvent + " Time: " + resultObj.strTime + resultObj.strStadium
+  mediaContent.append(dateTime)
+
+  cards.append(resultCard)
+
+
+
+  var footerItem = document.createElement("p")
+  footerItem.classList.add("card-footer-item")
+  footerItem.innerHTML = '<a href="#map" style="color: red;" class="title is-size-6">' + resultObj.strVenue + '</a>'
+  mediaContent.append(footerItem)
+
+  //  Map Function
+  function mapSearch(location) {
+      console.log("THIS IS HERE " + location);
+      geocoder.query(JSON.stringify(location), showMap);
+
+    }                            
+  
+  footerItem.addEventListener('mouseover',() => { mapSearch(resultObj.strVenue)})
+}
+
 
 
 
