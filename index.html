@@ -4,47 +4,123 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
     <title>Document</title>
   </head>
   <body>
-    <h1>Hello</h1>
-    <div
-      class="flex-row align-start align-stretch-md align-content-start align-content-stretch-md min-100-vh bg-primary"
-    >
-      <div class="col-12 col-md-3 bg-light p-3">
-        <h1 class="text-primary">Library of Congress Search Engine</h1>
-        <form id="search-form" class="mb-2">
-          <input
-            id="search-input"
-            class="form-input w-100"
-            type="text"
-            placeholder="Search!"
-          />
-          <select id="format-input" class="form-input w-100">
-            <option value="" disabled selected>Select a format...</option>
-            <option value="maps">Maps</option>
-            <option value="audio">Audio</option>
-            <option value="photos">Photos</option>
-            <option value="manuscripts">Manuscripts</option>
-            <option value="newspapers">Newspapers</option>
-            <option value="film-and-videos">Film and Videos</option>
-            <option value="notated-music">Notated Music</option>
-            <option value="websites">Websites</option>
-          </select>
-          <button class="btn btn-info btn-block">Search</button>
-        </form>
+    
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css">
 
-        <a href="./index.html" class="btn btn-block btn-danger"
-          >&larr; Go back.</a
+
+    <!-- ================ -->
+    <!--        NavBar -->
+    <!-- =================== -->
+    <nav class="navbar p-2 is-black" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#home">
+         <h1 class="title  is-4 ">Event Search</h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
         >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
 
-      <div class="col-12 col-md-9 p-3 text-light">
-        <h2>Showing results for <span id="result-text"></span></h2>
-        <div id="result-content"></div>
+      <di v id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start"></div>
+
+        <div class="navbar-end">
+          <a id="home" class="navbar-item">Home</a>
+          <a id="cards-result" href="#team-cards" class="navbar-item">Result</a>
+          <a id="maps" href="#map" class="navbar-item">map</a>
+
+        </div>
       </div>
+    </nav>
+        <!-- ================ -->
+    <!--        Main -->
+    <!-- =================== -->
+   <main class="main is-variable is-2-mobile is-0-tablet is-3-desktop is-8-widescreen is-1-fullhd">
+     <div class="background">
+       <div class="main-filed">
+         <img src="./assets/img/field3.jpg" alt="football field background">
+       </div>
+      <div class="pictures is-hidden-touch">
+       <div>
+       <img class="baseball layer" src="./assets/img/baseball.png" alt="baseball player" data-speed="-2">
+       <img class="soccer layer" src="./assets/img/soccer.png" alt="soccer player" data-speed="-3">
+      </div>
+      <div>
+       <img class="football layer" src="./assets/img/football.png" alt="football player"data-speed="-3">
+      </div>
+      <img class="basketball layer" src="./assets/img/basketball.png" alt="basketball player" data-speed="-2">
+    </div>
+      <div class="userInput has-text-centered ">
+        <h1 class="title  is-6">Pleace Search Your Favorite Team</h1>
+        <form id="search-form"  action="">
+        <input id="search-input" class="input is-large" type="text" placeholder="Barcelona"> <br>
+       <button id="submit" class="button  is-primary is-outlined">Search</button>
+      </form>
+      </div>
+      
+     </div>
+
+   </main>
+   
+        <!-- ================ -->
+    <!--        Result Content -->
+    <!-- =================== -->
+    <!-- <section  class="result-content pt-5">
+      <div class="container"> -->
+        <div class="result-content">
+        <!-- <div id="team-cards" class="columns  mt-5 is-8 is-variable is-centered inline-photo show-on-scroll"> -->
+          <div class="container">
+            <div class="section">
+              <div class="columns">
+                <div id="team-cards" class="column has-text-centered ">
+                  <h1 class="title " style="color: ghostwhite;">Up Coming Matches</h1><br>
+                </div>
+              </div>
+              <div class="animation ">
+              <div id="app" class="row columns is-multiline">
+              </div>
+              </div>
+            </div>
+          </div>
+      </div> 
+      
+        <!-- </div>
+    </section> -->
+    
+    
+    <div id="mapsection " class="secound-img" >
+      <div class="has-text-centered">
+      <h1 class=" is-size-2">Map</h1>
+      <button class="button mb-2  is-primary is-outlined"><a class="is-primary" href="#team-cards">GO UP</a></button>
+
+    </div>
+      <div id='map' class="map"></div>
+
+     
+
     </div>
     <script src="./assets/js/script.js"></script>
+
   </body>
 </html>
+

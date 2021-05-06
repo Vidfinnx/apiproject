@@ -1,104 +1,157 @@
+var searchButton = document.querySelector("#submit")
+var searchFormEl = document.querySelector("#search-form")
+var input = document.querySelector("#search-input")
+var searchResult = document.querySelector("#result-content")
 var resultTextEl = document.querySelector('#result-text');
-var resultContentEl = document.querySelector('#result-content');
-var searchFormEl = document.querySelector('#search-form');
+var cards = document.querySelector("#app")
+var markEl = document.querySelector('#mark')
+var model = document.querySelector('#modal')
+var mapSection = document.querySelector('#mapsection')
+
+
+
+L.mapbox.accessToken = 'pk.eyJ1IjoiYXlhZGFsc2hhaWtobGkiLCJhIjoiY2tvNTdiMzh5MG5vajJvczJoeG0yNnp5eSJ9.Qtj3iyvnwRNN_KrFLmK9pw';
+var geocoder = L.mapbox.geocoder('mapbox.places');
+
+var map = L.mapbox.map('map')
+    .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9'));
+
+    
+
+function showMap(err, data) {
+
+    if (data.lbounds) {
+        map.fitBounds(data.lbounds);
+    } else if (data.latlng) {
+        map.setView([data.latlng[0], data.latlng[1]], 20);
+    }
+}
 
 function getParams() {
   // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
   var searchParamsArr = document.location.search.split('&');
 
-  // Get the query and format values
+  // Get the locRes and format values
   var query = searchParamsArr[0].split('=').pop();
 
-  searchApi(query);
-}
-
-function printResults(resultObj) {
-  console.log(resultObj);
-
-  // set up `<div>` to hold result content
-  var resultCard = document.createElement('div');
-  resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
-
-  var resultBody = document.createElement('div');
-  resultBody.classList.add('card-body');
-  resultCard.append(resultBody);
-
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = resultObj.teams[0].strTeam;
-
-  var bodyContentEl = document.createElement('p');
-  bodyContentEl.innerHTML =
-    '<strong>Date:</strong> ' + resultObj.teams[0].strSport + '<br/>';
-
-  if (resultObj.subject) {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> ' + resultObj.subject.join(', ') + '<br/>';
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> No subject for this entry.';
-  }
-
-  if (resultObj.description) {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong> ' + resultObj.description[0];
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong>  No description for this entry.';
-  }
-
-  var linkButtonEl = document.createElement('a');
-  linkButtonEl.textContent = 'Read More';
-  linkButtonEl.setAttribute('href', resultObj.url);
-  linkButtonEl.classList.add('btn', 'btn-dark');
-
-  resultBody.append(titleEl, bodyContentEl, linkButtonEl);
-
-  resultContentEl.append(resultCard);
+  // searchApi(query );
 }
 
 function searchApi(query) {
-    var locQueryUrl = 'https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=';
-    var query = document.querySelector('#search-input').value;
-  locQueryUrl = locQueryUrl + query;
+  var event_url = "https://www.thesportsdb.com/api/v1/json/1/searchevents.php?e=";
 
-  fetch(locQueryUrl)
+  var event_url = event_url + query ;
+
+  var team_url = "https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=";
+
+  var team_url = team_url + query;
+
+console.log(event_url, team_url);
+
+  fetch(event_url)
     .then(function (response) {
       if (!response.ok) {
         throw response.json();
       }
-
       return response.json();
     })
-
-var x = "helllo"
-    //HELLO FROM AYAD BRANCH
-
-    // .then(function (locRes) {
-    //   // write query to page so user knows what they are viewing
-    //   resultTextEl.textContent = locRes.search.query;
-
-    //   console.log(locRes);
-
-    //   if (!locRes.results.length) {
-    //     console.log('No results found!');
-    //     resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-    //   } else {
-    //     resultContentEl.textContent = '';
-    //     for (var i = 0; i < locRes.results.length; i++) {
-    //       printResults(locRes.results[i]);
-    //     }
-    //   }
-    // })
+    .then(function (locRes) {
+      // write locRes to page so user knows what they are viewing
+      cards.textContent = locRes.event.length;
+      console.log(locRes.event);
+      if (!locRes.event.length) {
+        console.log('No results found!');
+        cards.innerHTML = '<h3>No results found, search again!</h3>';
+      } else {
+        cards.textContent = '';
+        for (var i = 0; i < locRes.event.length; i++) {
+          printResults(locRes.event[i]);
+        }
+      }
+      
+    })
     .catch(function (error) {
       console.error(error);
     });
+
 }
+
+function printResults(resultObj) {
+
+
+  var resultCard = document.createElement('div');
+  resultCard.classList.add("column", "is-4" );
+
+  var largeCard = document.createElement('div');
+  largeCard.classList.add("card", "large");
+  resultCard.append(largeCard)
+ 
+  var imageCard = document.createElement('div')
+  imageCard.classList.add("card-image");
+  largeCard.append(imageCard)
+
+  var firstFigure = document.createElement('figure')
+  firstFigure.classList.add("image", "is-16b=y9");
+  imageCard.append(firstFigure)
+
+
+  var gameThumb = document.createElement('img')
+  gameThumb.setAttribute("src", resultObj.strThumb)
+  firstFigure.append(gameThumb)
+
+  var contentCard = document.createElement('div')
+  contentCard.classList.add("card-content")
+  largeCard.append(contentCard)
+
+  var mediaCard = document.createElement('div')
+  mediaCard.classList.add("media")
+  contentCard.append(mediaCard)
+
+  var mediaContent = document.createElement('div')
+  mediaContent.classList.add("media-content")
+  mediaCard.append(mediaContent)
+
+  var matchName = document.createElement('p')
+  matchName.classList.add("title", "is-6", "no-padding")
+  matchName.innerHTML = resultObj.strEvent
+  mediaContent.append(matchName)
+
+  var sportName = document.createElement('p')
+  sportName.classList.add("title", "is-7", "no-padding")
+  sportName.innerHTML = "Sport: " + resultObj.strSport
+  mediaContent.append(sportName)
+
+  var dateTime = document.createElement('p')
+  dateTime.classList.add("title", "is-7", "no-padding")
+  dateTime.innerHTML = "Date: " + resultObj.dateEvent + " Time: " + resultObj.strTime + resultObj.strStadium
+  mediaContent.append(dateTime)
+
+  cards.append(resultCard)
+
+
+
+  var footerItem = document.createElement("p")
+  footerItem.classList.add("card-footer-item")
+  footerItem.innerHTML = '<a href="#map" style="color: red;" class="title is-size-6">' + resultObj.strVenue + '</a>'
+  mediaContent.append(footerItem)
+
+  //  Map Function
+  function mapSearch(location) {
+      console.log("THIS IS HERE " + location);
+      geocoder.query(JSON.stringify(location), showMap);
+
+    }                            
+  
+  footerItem.addEventListener('mouseover',() => { mapSearch(resultObj.strVenue)})
+}
+
+
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
-
+  
   var searchInputVal = document.querySelector('#search-input').value;
-//   var formatInputVal = document.querySelector('#search-input').value;
+  console.log(searchInputVal);
 
   if (!searchInputVal) {
     console.error('You need a search input value!');
@@ -108,6 +161,49 @@ function handleSearchFormSubmit(event) {
   searchApi(searchInputVal);
 }
 
-searchFormEl.addEventListener('submit', handleSearchFormSubmit);
+// Animation
+
+document.addEventListener("mousemove", parallax);
+
+function parallax(e) {
+  this.querySelectorAll(".layer").forEach(layer => {
+    const speed = layer.getAttribute('data-speed')
+    const x = (window.innerWidth - e.pageX*speed)/100
+    const y = (window.innerHeight - e.pageY*speed)/100
+
+    layer.style.transform = `translateX(${x}px) translateY(${y}px)`
+  })
+}
+// Burger manu
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+
+        // Get the target from the "data-target" attribute
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+
+});
+
+
+
+
+searchFormEl.addEventListener("submit", handleSearchFormSubmit)
 
 getParams();
