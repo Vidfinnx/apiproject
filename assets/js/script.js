@@ -9,8 +9,9 @@ var model = document.querySelector('#modal')
 var mapSection = document.querySelector('#mapsection')
 var country = document.querySelector('.country')
 
-
-
+// ======
+// Map Api
+// ======
 L.mapbox.accessToken = 'pk.eyJ1IjoiYXlhZGFsc2hhaWtobGkiLCJhIjoiY2tvNTdiMzh5MG5vajJvczJoeG0yNnp5eSJ9.Qtj3iyvnwRNN_KrFLmK9pw';
 var geocoder = L.mapbox.geocoder('mapbox.places');
 
@@ -28,6 +29,7 @@ function showMap(err, data) {
     }
 }
 
+
 function getParams() {
   // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
   var searchParamsArr = document.location.search.split('&');
@@ -35,39 +37,11 @@ function getParams() {
   // Get the locRes and format values
   var query = searchParamsArr[0].split('=').pop();
 
-  // searchApi(query );
-}
-function searchstadiumapi(query) {
-  var studiamInfo = "https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t="
-
-  studiamInfo = studiamInfo + query;
-
-
-fetch(studiamInfo)
-.then(function (response) {
-  if (!response.ok) {
-    throw response.json();
-  }
-  return response.json();
-})
-
-.then(function (locRes1) {
-  // write locRes to page so user knows what they are viewing
-  cards.textContent = locRes1.teams.length;
-  console.log(locRes1.teams);
-  if (!locRes1.teams.length) {
-    console.log('No results found!');
-    cards.innerHTML = '<h3>No results found, search again!</h3>';
-  } else {
-    cards.textContent = '';
-    for (var i = 0; i < locRes1.teams.length; i++) {
-      printResults1(locRes1.teams[i]);
-    }
-  }
-})
 }
 
-
+// ======
+// Event Api
+// ======
 function searchApi(query) {
   var event_url = "https://www.thesportsdb.com/api/v1/json/1/searchevents.php?e=";
 
@@ -98,22 +72,12 @@ console.log(event_url);
       }
       
     })
-
-
     .catch(function (error) {
       console.error(error);
     });
 
 
 }
-
-function printResults1(countryObj) {
-  console.log(countryObj.intStadiumCapacity);
-  var capacity = document.querySelector("#capacity")
-  capacity.textContent = countryObj.intStadiumCapacity
-  
-}
-
 
 function printResults(resultObj) {
   var resultCard = document.createElement('div');
@@ -127,21 +91,21 @@ function printResults(resultObj) {
   imageCard.classList.add("card-image");
   largeCard.append(imageCard)
 
-  var firstFigure = document.createElement('figure')
+  var firstFigure = document.createElement('figure');
   firstFigure.classList.add("image", "is-16b=y9");
-  imageCard.append(firstFigure)
+  imageCard.append(firstFigure);
 
-  var gameThumb = document.createElement('img')
+  var gameThumb = document.createElement('img');
 
   if (resultObj.strThumb) {
-    gameThumb.setAttribute("src", resultObj.strThumb)
-    firstFigure.append(gameThumb)
+    gameThumb.setAttribute("src", resultObj.strThumb);
+    firstFigure.append(gameThumb);
   }else {
-    gameThumb.setAttribute("src", "./assets/img/no-img-found.png")
-    gameThumb.setAttribute("style", "height: 23vh;")
-    
-    firstFigure.append(gameThumb)
+    gameThumb.setAttribute("src", "./assets/img/no-img-found.png");
+    gameThumb.setAttribute("style", "height: 23vh;");
+    firstFigure.append(gameThumb);
   }
+
 
   var contentCard = document.createElement('div')
   contentCard.classList.add("card-content")
@@ -170,18 +134,15 @@ function printResults(resultObj) {
   dateTime.innerHTML = "Date: " + resultObj.dateEvent + " Time: " + resultObj.strTime
   mediaContent.append(dateTime)
 
-  cards.append(resultCard)
-
-
-
-
+  
   var footerItem = document.createElement("p")
   footerItem.classList.add("card-footer-item")
   footerItem.innerHTML = '<a href="#map" style="color: red;" class="title is-size-6">' + resultObj.strVenue + '</a>'
   mediaContent.append(footerItem)
 
-
+  cards.append(resultCard)
   
+
 
   //  Map Function
   function mapSearch(location) {
@@ -218,10 +179,15 @@ function handleSearchFormSubmit(event) {
   }
 
   searchApi(searchInputVal);
-  searchstadiumapi(searchInputVal);
 }
 
+
+
+
+// ======
 // Animation
+// ======
+
 
 document.addEventListener("mousemove", parallax);
 
@@ -234,6 +200,8 @@ function parallax(e) {
     layer.style.transform = `translateX(${x}px) translateY(${y}px)`
   })
 }
+
+
 // Burger manu
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -260,10 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-
-
-
-
 searchFormEl.addEventListener("submit", handleSearchFormSubmit)
 
 getParams();

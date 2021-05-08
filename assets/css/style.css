@@ -9,21 +9,12 @@ html {
   scroll-behavior: smooth;
 }
 
-#zoom-level {
-  margin: 10px;
-  padding: 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1000;
-  background: #ddd;
-}
-
 body {
   font-family: var(--main-font);
   background-color: (var(--dark-color));
   animation: transitionIn 0.75s;
 }
+
 .title {
   color: #fff;
 }
@@ -117,9 +108,6 @@ body {
   color: white;
 }
 
-.hidden {
-  display: none;
-}
 .result-content .secound-img img {
   width: 100%;
   height: 100vh;
@@ -140,10 +128,6 @@ body {
 }
 
 /* =============== */
-/*      Animation   */
-/* =============== */
-
-/* =============== */
 /*      Models  */
 /* =============== */
 
@@ -161,6 +145,11 @@ body {
   height: 50vh;
   width: 50%;
 }
+
+.hidden {
+  display: none;
+}
+
 /* =============== */
 /*      KeyFrames   */
 /* =============== */
@@ -178,7 +167,6 @@ body {
 
 @keyframes startleft {
   from {
-    /* margin-top: 200px; */
     margin-left: -500px;
   }
   to {
@@ -188,7 +176,6 @@ body {
 
 @keyframes startbottom {
   from {
-    /* margin-top: 600px; */
     margin-left: -1200px;
   }
 }
