@@ -1,4 +1,4 @@
-# apiproject<!--
+## Project BALL FINDER
 
 <!-- PROJECT LOGO -->
 <br />
@@ -37,8 +37,6 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://i.imgur.com/Uq7ge7s.png)
-
 The Ball Finder is a web app that enables you to search for your favoirot team up coming event, and view what
 
 ### Built With
@@ -52,5 +50,5 @@ The Ball Finder is a web app that enables you to search for your favoirot team u
 
 ## Usage
 
-You can easly use this website by searching your favoirte team name [!Search](./assets/img/readme-search.png)
+You can easly use this website by searching your favoirte team name <img src="./assets/img/readme-search.png alt="screenshot" >()
 _For more examples, please refer to the [Documentation](https://example.com)_
