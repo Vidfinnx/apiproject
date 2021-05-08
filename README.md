@@ -28,8 +28,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#usage">Credits</a></li>
   </ol>
 </details>
 
@@ -37,7 +36,7 @@
 
 ## About The Project
 
-The Ball Finder is a web app that enables you to search for your favoirot team up coming event, and view what
+Ballfinder is a web app that enables you to search for your favorite team's upcoming matches and find out Where, When, and Who your team is playing against as well as what league/cup they're playing in!
 
 ### Built With
 
@@ -49,6 +48,15 @@ The Ball Finder is a web app that enables you to search for your favoirot team u
 - [thesportApi](https://www.thesportsdb.com/)
 
 ## Usage
+The web page asks for your team name, then after submitting, will display all the upcoming events for you team with the date and time. It will also show the location of the stadium that the games are going to be played at.
 
-You can easly use this website by searching your favoirte team name <img src="./assets/img/readme-search.png" alt="screenshot" >
-_For more examples, please refer to the [Documentation](https://example.com)_
+
+## Credits
+
+1. https://www.w3schools.com/
+2. https://stackoverflow.com/
+3. https://github.com/
+4. https://www.thesportsdb.com/
+5. https://developer.mozilla.org/en-US/
+6. https://docs.mapbox.com/
+
