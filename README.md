@@ -52,5 +52,5 @@ The Ball Finder is a web app that enables you to search for your favoirot team u
 
 ## Usage
 
-You can easly use this website by searching your favoirte team name (./assets/img/readme-search.png)
+You can easly use this website by searching your favoirte team name [!Search](./assets/img/readme-search.png)
 _For more examples, please refer to the [Documentation](https://example.com)_
